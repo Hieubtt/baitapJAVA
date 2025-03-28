@@ -34,5 +34,7 @@ public class Users  implements Serializable{
 	public void setHinhAnh(String hinhAnh) {
 		this.hinhAnh = hinhAnh;
 	}
-	
+	public String toString() {
+        return "Users{name='" + UserName + "', phone='" + Tel + "', linkhinh='" + hinhAnh + "'}";
+    }
 }

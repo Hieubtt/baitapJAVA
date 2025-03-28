@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -35,7 +37,8 @@ public class FrmFindUsers {
 	private JFrame frame;
 	private JTextField txtFind;
 	private JTable table;
-	List<Users> lst = new ArrayList<Users>() ;
+	HashSet<String> uniqueUsers = new HashSet<String>();
+	List<Users> lst = new ArrayList<Users>();
 	/**
 	 * Launch the application.
 	 */
@@ -147,74 +150,97 @@ public class FrmFindUsers {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					@SuppressWarnings("resource")
-					ObjectInputStream ois = new ObjectInputStream(new FileInputStream("APIUser.txt"));
+					DataInputStream ois = new DataInputStream(new FileInputStream("APIUser1.txt"));
+					DefaultTableModel dfm = new DefaultTableModel(
+						    new Object[][] {}, 
+						    new String[] { "Hình Ảnh", "Họ tên", "ĐTDĐ" }) {
+						    /**
+								 * 
+								 */
+								private static final long serialVersionUID = 1L;
+
+							@Override
+						    public Class<?> getColumnClass(int columnIndex) {
+						        if (columnIndex == 0) {
+						            return ImageIcon.class; // Cột đầu tiên là ảnh
+						        }
+						        return String.class; // Cột khác là String
+						    }
+						};
+					dfm.setRowCount(0); 
+					
 					while(true)
 					{
 						try {
-							//DefaultTableModel dfm = new  DefaultTableModel(new String [] {"Hình Ảnh", "Họ tên", "ĐTDĐ"},0);
-							DefaultTableModel dfm = new DefaultTableModel(
-								    new Object[][] {}, 
-								    new String[] { "Hình Ảnh", "Họ tên", "ĐTDĐ" }) {
-								    /**
-										 * 
-										 */
-										private static final long serialVersionUID = 1L;
-
-									@Override
-								    public Class<?> getColumnClass(int columnIndex) {
-								        if (columnIndex == 0) {
-								            return ImageIcon.class; // Cột đầu tiên là ảnh
-								        }
-								        return String.class; // Cột khác là String
-								    }
-								};
-							
-		                    
-							Users user = (Users) ois.readObject();
-		                    //System.out.println(" UserName: " + user.getUserName() + " - " + user.getTel() + user.getHinhAnh());
+							String name = ois.readUTF();      // Cột 1: tên
+							String phone = ois.readUTF();     // Cột 2: email
+							String linkhinh = ois.readUTF();     // Cột 3: số điện thoại
+							Users user = new Users (name,phone,linkhinh);
 							lst.add(user);
 		                    String imagePath = user.getHinhAnh();
-						    File file = new File(imagePath);
+						    //File file = new File(imagePath);
+						    
 						    for(@SuppressWarnings("unused") Users u : lst)
 						    {
-						    	if(user.getUserName().toLowerCase().contains(txtFind.getText().toLowerCase()))
+						    	System.out.println("Đang duyệt: " + u.getUserName());
+						    	if(u.getUserName().toLowerCase().contains(txtFind.getText().toLowerCase()))
 		                    {
-		                    	if (!file.exists()) {
+						    	File file = new File(u.getHinhAnh());
+		                    	if (!file.exists()) 
+		                    	{
 							        JOptionPane.showMessageDialog(frame, "Ảnh không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-							    } else {
-							        
-							        BufferedImage img1 = ImageIO.read(file);
-							        if (img1 != null) {
-							            Image scaledImg = img1.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-							            ImageIcon icon = new ImageIcon(scaledImg);
-							            dfm.addRow(new Object [] {icon,user.getUserName(),user.getTel()});///
-							            table.setModel(dfm);
-							            System.out.println(" UserName: " + user.getUserName() + " - " + user.getTel() + user.getHinhAnh());
-							        } else {
-							            JOptionPane.showMessageDialog(frame, "Không thể đọc ảnh!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-							        }
-							        
+							    } 
+		                    	else 
+						    	{	
+		                    		boolean isDuplicate = false; 
+							    	for (int i = 0; i < dfm.getRowCount(); i++) 
+							    	{
+							    	    if (dfm.getValueAt(i, 1).equals(u.getUserName()) &&
+							    	        dfm.getValueAt(i, 2).equals(u.getTel()))  
+							    	    {
+							    	        isDuplicate = true;
+							    	        break;
+							    	    }
+							    	}
+							    	if(!isDuplicate)
+							    	{
+							    		try {
+								        BufferedImage img1 = ImageIO.read(file);
+								        if (img1 != null) {
+								            Image scaledImg = img1.getScaledInstance(100, 50, Image.SCALE_SMOOTH);
+								            ImageIcon icon = new ImageIcon(scaledImg);
+								            dfm.addRow(new Object [] {icon,u.getUserName(),u.getTel()});///
+								            table.setModel(dfm);
+								            System.out.println(" UserName: " + u.getUserName() + " - " + u.getTel() + u.getHinhAnh());
+								        } else {
+								            JOptionPane.showMessageDialog(frame, "Không thể đọc ảnh!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+								        }
+							    	}
+							    		catch (IOException e1) {
+						                    JOptionPane.showMessageDialog(frame, "Lỗi khi đọc ảnh: " + e1.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+						                }
+							    	}
+							    	
 							    }
 		                    	
-		                    	return;
+		                    	
 		                    }
 		                    
 					    }
-		                    
+						    //System.out.println(isDuplicate);
+						    System.out.println(lst);
 		                } catch (EOFException e1) {
-		                    break;
+		                	break;
 		                }
 						
+						
 					}
-					ois.close();
+					//ois.close();
 					
 					//ois.close();
 				} catch (IOException e3) {
 					JOptionPane.showMessageDialog(frame,"Lỗi không tìm thấy file API ","Lỗi",JOptionPane.ERROR_MESSAGE);
 					e3.printStackTrace();
-				} catch (ClassNotFoundException e2) {
-					JOptionPane.showMessageDialog(frame,"Lỗi không đọc được file API ","Lỗi",JOptionPane.ERROR_MESSAGE);
-					e2.printStackTrace();
 				}
 				
 				
