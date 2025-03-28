@@ -77,7 +77,6 @@ public class FrmUpdDelUser {
 			    }
 			};
 			DataInputStream dis = new DataInputStream(new FileInputStream("APIUser1.txt"));
-<<<<<<< HEAD
 			
 			while (true) {
 			    try {
@@ -109,37 +108,6 @@ public class FrmUpdDelUser {
 			    }
 			}
 
-=======
-			while(true)
-			{
-				String name = dis.readUTF();      // Cột 1: tên
-				String phone = dis.readUTF();     // Cột 2: email
-				String linkhinh = dis.readUTF();     // Cột 3: số điện thoại
-				Users u = new Users(name,phone,linkhinh);
-				lst.add(u);
-				
-				for(Users i : lst)
-				{
-					File file = new File(u.getHinhAnh());
-					try {
-				        BufferedImage img1 = ImageIO.read(file);
-				        if (img1 != null) {
-				            Image scaledImg = img1.getScaledInstance(100, 50, Image.SCALE_SMOOTH);
-				            ImageIcon icon = new ImageIcon(scaledImg);
-				            dfm.addRow(new Object [] {icon,u.getUserName(),u.getTel()});///
-				            table.setModel(dfm);
-				            System.out.println(" UserName: " + u.getUserName() + " - " + u.getTel() + u.getHinhAnh());
-				        } else {
-				            JOptionPane.showMessageDialog(frame, "Không thể đọc ảnh!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				        }
-			    	}
-					catch (IOException e1) {
-	                    JOptionPane.showMessageDialog(frame, "Lỗi khi đọc ảnh: " + e1.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-	                }
-				}
-				
-			}
->>>>>>> 781981efd52fe571124cb60eb42d3e7291ed4e80
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -149,10 +117,7 @@ public class FrmUpdDelUser {
 			e.printStackTrace();
 		}
 		
-<<<<<<< HEAD
 		
-=======
->>>>>>> 781981efd52fe571124cb60eb42d3e7291ed4e80
 	}
 
 	/**
