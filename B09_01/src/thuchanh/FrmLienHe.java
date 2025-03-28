@@ -2,10 +2,14 @@ package thuchanh;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -46,6 +50,7 @@ public class FrmLienHe {
 	/**
 	 * Create the application.
 	 */
+
 	public FrmLienHe() {
 		initialize();
 	}
@@ -54,6 +59,7 @@ public class FrmLienHe {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 841, 429);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,13 +129,32 @@ public class FrmLienHe {
 					return;
 				}
 				try {
-					ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("APIUser.txt"));//,true
+					
+					//FileOutputStream fos = new FileOutputStream("APIUser.txt",true);
+					DataOutputStream dos = new DataOutputStream(new FileOutputStream("APIUser1.txt", true));//,true
+					
 //					oos.writeUTF(Name);
 //					oos.writeUTF(SDT);
 //					oos.writeUTF(linkHA);
-					
-					oos.writeObject(lh); // sử dụng ghi object
-					oos.close();
+//					if(new File("APIUser.txt").length() == 0)
+//					{
+//						oos = new DataInputStream(fos);
+//					}
+//					else
+//					{
+//						oos = new DataInputStream(fos) ;
+////						{
+////							@Override 
+////							protected void writeStreamHeader() throws IOException {
+////								reset();// bỏ ghi header khi file đã có dữ liệu
+////							}
+////						};
+//					}
+					dos.writeUTF(lh.getUserName()); // sử dụng ghi object
+					dos.writeUTF(lh.getTel());
+					dos.writeUTF(lh.getHinhAnh());
+					dos.close();
+					//fos.close();
 					JOptionPane.showMessageDialog(btnAdd,"Đã thêm liên hệ: " + lh.getUserName()+"-"+lh.getTel() +"-"+ lh.getHinhAnh());
 					String imagePath = lh.getHinhAnh();
 				    File file = new File(imagePath);
