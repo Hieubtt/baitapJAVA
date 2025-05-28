@@ -77,35 +77,37 @@ public class FrmUpdDelUser {
 			    }
 			};
 			DataInputStream dis = new DataInputStream(new FileInputStream("APIUser1.txt"));
-			while(true)
-			{
-				String name = dis.readUTF();      // Cột 1: tên
-				String phone = dis.readUTF();     // Cột 2: email
-				String linkhinh = dis.readUTF();     // Cột 3: số điện thoại
-				Users u = new Users(name,phone,linkhinh);
-				lst.add(u);
-				
-				for(Users i : lst)
-				{
-					File file = new File(u.getHinhAnh());
-					try {
-				        BufferedImage img1 = ImageIO.read(file);
-				        if (img1 != null) {
-				            Image scaledImg = img1.getScaledInstance(100, 50, Image.SCALE_SMOOTH);
-				            ImageIcon icon = new ImageIcon(scaledImg);
-				            dfm.addRow(new Object [] {icon,u.getUserName(),u.getTel()});///
-				            table.setModel(dfm);
-				            System.out.println(" UserName: " + u.getUserName() + " - " + u.getTel() + u.getHinhAnh());
-				        } else {
-				            JOptionPane.showMessageDialog(frame, "Không thể đọc ảnh!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				        }
-			    	}
-					catch (IOException e1) {
-	                    JOptionPane.showMessageDialog(frame, "Lỗi khi đọc ảnh: " + e1.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-	                }
-				}
-				
+			
+			while (true) {
+			    try {
+			        String name = dis.readUTF();      
+			        String phone = dis.readUTF();     
+			        String linkhinh = dis.readUTF();  
+
+			        // Tạo đối tượng Users và thêm vào danh sách
+			        Users u = new Users(name, phone, linkhinh);
+			        lst.add(u);
+			        System.out.println("Thêm người dùng: " + u);
+
+			        File file = new File(u.getHinhAnh());
+			      
+			            BufferedImage img1 = ImageIO.read(file);
+			            if (img1 != null) {
+			                Image scaledImg = img1.getScaledInstance(100, 50, Image.SCALE_SMOOTH);
+			                ImageIcon icon = new ImageIcon(scaledImg);
+
+			                dfm.addRow(new Object[]{icon, u.getUserName(), u.getTel()});
+			                table.setModel(dfm);
+
+			                System.out.println("UserName: " + u.getUserName() + " - " + u.getTel() + " - " + u.getHinhAnh());
+			            } 
+			        
+			    } catch (IOException e) {
+			        //JOptionPane.showMessageDialog(frame, "Lỗi khi đọc dữ liệu: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+			        break; // Thoát khỏi vòng lặp khi có lỗi
+			    }
 			}
+
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -114,6 +116,7 @@ public class FrmUpdDelUser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 	}
 

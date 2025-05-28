@@ -179,7 +179,7 @@ public class FrmFindUsers {
 							lst.add(user);
 		                    String imagePath = user.getHinhAnh();
 						    //File file = new File(imagePath);
-						    System.out.println(lst);
+						    
 						    for(@SuppressWarnings("unused") Users u : lst)
 						    {
 						    	System.out.println("Đang duyệt: " + u.getUserName());
