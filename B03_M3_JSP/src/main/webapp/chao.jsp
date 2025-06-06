@@ -1,17 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Chào</title>
-
-
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tags"%>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
-</head>
-<body>
-<h1>Chào mừng đến với trang web </h1>
-<%-- <h3>Tổng: <%=a %>+<%=b %>= <%=t %></h3>--%>
-<link rel="stylesheet" type="text/css" href="css/styles.css">
-</body>
-</html>
+<tags:template tieuDe="Chao">
+	<jsp:attribute name="noiDung">
+
+		<h1>Chào mừng đến với trang web </h1>
+
+	</jsp:attribute>
+</tags:template>

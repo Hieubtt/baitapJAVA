@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 public class CSDL {
 	private static Connection ketNoi;
-	private static final String  url ="jdbc:mysql://localhost:3308/ql_bansua?useUnicode=true&characterEncoding=UTF-8";
+	private static final String  url ="jdbc:mysql://localhost:3308/ql_bansua?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
 
 	public static Connection getketNoi() {
 		try {
@@ -42,7 +42,7 @@ public class CSDL {
 //			ac=rs.getString("Ten_hang_sua");
 //			System.out.println(ab + " "+ ac);
 //		}
-//		
+//	
 //	}
 
 }
