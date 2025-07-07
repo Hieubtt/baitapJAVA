@@ -35,6 +35,24 @@ public class LoaiSuaBL {
         }
         return dsls;
     }
+    
+    public static LoaiSua DocTheoMaLoaiID(String ml){
+        LoaiSua dsls = null;
+        try (Connection con = CSDL.LayKetNoi()){
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery("select * from loai_sua where ma_loai_sua ='"+ml+"'");
+            //dsls = new ArrayList<>();
+            while(rs.next()){
+                dsls = new LoaiSua();
+                dsls.setMaLoai(rs.getString("ma_loai_sua"));
+                dsls.setTenLoai(rs.getString("ten_loai"));
+                //dsls.add(ls);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoaiSuaBL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsls;
+    }
     public static int them(LoaiSua ls) {
     	String sql = "insert into loai_sua (ma_loai_sua,ten_loai) values(?,?)";
     	
@@ -45,8 +63,15 @@ public class LoaiSuaBL {
             pst.setString(2,ls.getTenLoai());
             return pst.executeUpdate();
             }
-         catch (Exception ex) {
-            return 0;
+         catch (SQLException ex) {
+        	// Kiểm tra lỗi trùng khóa chính (ma_loai_sua đã tồn tại)
+        	    if (ex.getMessage().contains("PRIMARY") || ex.getMessage().contains("duplicate") || ex.getErrorCode() == 2627) {
+        	        System.out.println("Mã loại sữa đã tồn tại!");
+        	        return -1; // hoặc throw, hoặc return code riêng
+        	    } else {
+        	        ex.printStackTrace(); // debug lỗi khác
+        	        return 0;
+        	    }
         }
     	
     }
@@ -125,10 +150,9 @@ public class LoaiSuaBL {
     }
     
 //    public static void main(String args[]) {
-//    	LoaiSua ls = new LoaiSua();
-//    	ls.setMaLoai("AA");
-//    	ls.setTenLoai("hehehuhu111");	
-//    	capnhat(ls);
+//    	LoaiSua ls = DocTheoMaLoaiID("SB");
+//    	System.out.println(ls.getMaTen());
+//    	
 //    	
 //    }
 }

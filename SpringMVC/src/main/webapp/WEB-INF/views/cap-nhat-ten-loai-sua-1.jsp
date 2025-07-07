@@ -19,4 +19,6 @@
 	<p><input type="submit" name ="btnUpdate" value="Cập Nhật"></p>
 </form>	
 </body>
+<p><a href="${pageContext.request.contextPath}/xoa-loai-sua">Xóa Loại Sữa</a></p>
+
 </html>

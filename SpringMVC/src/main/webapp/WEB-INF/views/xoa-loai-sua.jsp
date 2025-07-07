@@ -20,4 +20,5 @@
 
 </form>
 </body>
+<p><a href="${pageContext.request.contextPath}/cap-nhat-ten-loai-sua-1">Cập Loại Sữa</a></p>
 </html>
