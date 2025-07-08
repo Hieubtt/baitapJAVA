@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <!-- Default Main Template -->
+    <definition name="tm01" template="/WEB-INF/templates/trang-mau-1.jsp">
+        <put-attribute name="tieuDe" value="Trang mẫu 01" type="string" />
+        <put-attribute name="dauTrang" value="/WEB-INF/templates/dau-trang.jsp" />
+        <put-attribute name="cuoiTrang" value="/WEB-INF/templates/cuoi-trang.jsp" />
+        <put-attribute name="thucDon" value="/WEB-INF/templates/thuc-don.jsp" />
+        <put-attribute name="noiDung" value="" />
+    </definition>
+ 
+    <definition name="home" extends="tm01">
+        <put-attribute name="tieuDe" value="Home" />
+        <put-attribute name="noiDung" value="/WEB-INF/views/home.jsp" />
+    </definition>
+
+</tiles-definitions>

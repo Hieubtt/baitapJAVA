@@ -13,7 +13,7 @@ public class HomeController {
 		// request.getRequestDispatcher("Views/gio-hang.jsp").forward(request,response)
 		// request.getRequestDispatcher("Views/san-pham-moi.jsp").forward(request,response)
 	}
-		@RequestMapping("/gethieubtt")
+	@RequestMapping("/gethieubtt")
 	@ResponseBody
 	public String gethieubtt(@CookieValue(name="hieubtt") String s) {
 		return s;
