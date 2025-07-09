@@ -18,5 +18,14 @@
         <put-attribute name="tieuDe" value="Home" />
         <put-attribute name="noiDung" value="/WEB-INF/views/home.jsp" />
     </definition>
-
+	
+	<definition name="loai-sua" extends="tm01">
+        <put-attribute name="tieuDe" value="Loai Sua" />
+        <put-attribute name="noiDung" value="/WEB-INF/views/loai-sua.jsp" />
+    </definition>
+	
+	<definition name="upload-file" extends="tm01">
+        <put-attribute name="tieuDe" value="Upload File" />
+        <put-attribute name="noiDung" value="/WEB-INF/views/upload-file.jsp" />
+    </definition>
 </tiles-definitions>
