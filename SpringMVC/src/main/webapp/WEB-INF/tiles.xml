@@ -28,4 +28,9 @@
         <put-attribute name="tieuDe" value="Upload File" />
         <put-attribute name="noiDung" value="/WEB-INF/views/upload-file.jsp" />
     </definition>
+    
+    <definition name="sendmail" extends="tm01">
+        <put-attribute name="tieuDe" value="Send Mail" />
+        <put-attribute name="noiDung" value="/WEB-INF/views/sendmail.jsp" />
+    </definition>
 </tiles-definitions>
