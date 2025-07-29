@@ -33,4 +33,8 @@
         <put-attribute name="tieuDe" value="Send Mail" />
         <put-attribute name="noiDung" value="/WEB-INF/views/sendmail.jsp" />
     </definition>
+    <definition name="loai-user" extends="tm01">
+        <put-attribute name="tieuDe" value="Loai User" />
+        <put-attribute name="noiDung" value="/WEB-INF/views/loai-user.jsp" />
+    </definition>
 </tiles-definitions>

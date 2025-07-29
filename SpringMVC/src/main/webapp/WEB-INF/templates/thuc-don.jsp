@@ -5,5 +5,5 @@
 	<li><a href="loai-sua">Loại Sữa</a></li>
 	<li><a href="upload-file">Upload File</a></li>
 	<li><a href="sendmail.html">Send Mail</a></li>
-	<li><a href="#">Thực đơn 5</a></li>
+	<li><a href="loai-user">Loại Users</a></li>
 </ul>
