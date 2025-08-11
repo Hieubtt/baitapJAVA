@@ -8,6 +8,7 @@
 <title>Danh Sách Users</title>
 </head>
 <body>
+<h2>Số lượng người dùng: ${soLuong}</h2> <!-- Display user count -->
 <table border="1" style="width: 50% ; margin: auto;">
 	<caption style="font-weight:bold;font-size:25px;">DANH SÁCH USERS</caption>
 	<tr>

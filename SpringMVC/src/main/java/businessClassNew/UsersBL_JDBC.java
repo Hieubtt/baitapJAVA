@@ -49,6 +49,18 @@ public class UsersBL_JDBC {
 			}
 		 }, ml);
 	 }
+	 public static int countUser() {
+		 String sql = "select count(*) as stg from system_users";
+		 
+		 return jdbc.queryForObject(sql, new RowMapper<Integer>() {
+			 @Override
+			 public Integer mapRow(ResultSet rs , int numRow) throws SQLException {
+				 return rs.getInt("stg");
+			 }
+		 });
+		 
+		 
+	 }
 //	 public static void main (String [] args ) {
 //	 
 //	 List<Users> ds = getAll();
